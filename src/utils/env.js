@@ -9,6 +9,8 @@ module.exports = {
   DB_PASSWORD: process.env.DB_PASSWORD,
   DB_DATABASE: process.env.DB_DATABASE,
   DB_PORT: process.env.DB_PORT,
+  // Client URL
+  CLIENT_URL: process.env.CLIENT_URL,
   // jwt
   SECRET_KEY_JWT: process.env.SECRET_KEY_JWT,
   // google
@@ -17,5 +19,6 @@ module.exports = {
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   REDIRECT_URI: process.env.REDIRECT_URI,
+  DRIVE_REFRESH_TOKEN: process.env.DRIVE_REFRESH_TOKEN,
   GMAIL_REFRESH_TOKEN: process.env.GMAIL_REFRESH_TOKEN,
 };

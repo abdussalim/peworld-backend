@@ -1,6 +1,6 @@
 const { check } = require("express-validator");
 
-const registerWorker = [
+const register = [
   // name
   check("name", "Name required").not().isEmpty(),
   check("name", "Name only can contains alphabet").isAlpha("en-US", {
@@ -18,21 +18,6 @@ const registerWorker = [
   // password
   check("password", "Password require 8 or more characters").isLength({
     min: 8,
-  }),
-];
-
-const registerRecruiter = [
-  ...registerWorker,
-  // companyName
-  check("companyName", "Company Name required").not().isEmpty(),
-  check(
-    "companyName",
-    "Company Name maximum length is 100 characters"
-  ).isLength({ max: 100 }),
-  // position
-  check("position", "Position required").not().isEmpty(),
-  check("position", "Position maximum length is 100 characters").isLength({
-    max: 100,
   }),
 ];
 
@@ -58,8 +43,7 @@ const reset = [
 ];
 
 module.exports = {
-  registerWorker,
-  registerRecruiter,
+  register,
   login,
   forgot,
   reset,

@@ -12,7 +12,7 @@ module.exports = {
         phone,
         address,
         role,
-        is_verified = true,
+        is_verified = false,
         createdAt,
       } = body;
 
@@ -42,6 +42,19 @@ module.exports = {
       db.query(
         "UPDATE users SET user_token=$1 WHERE id=$2",
         [token, id],
+        (error, result) => {
+          if (error) {
+            reject(error);
+          }
+          resolve(result);
+        }
+      );
+    }),
+  activateEmail: (id) =>
+    new Promise((resolve, reject) => {
+      db.query(
+        "UPDATE users SET is_verified=true WHERE id=$1",
+        [id],
         (error, result) => {
           if (error) {
             reject(error);
