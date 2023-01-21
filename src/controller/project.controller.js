@@ -43,7 +43,6 @@ module.exports = {
 
       const project = await projectModel.findBy("user_id", id);
       // jika project ditemukan
-      console.log(project);
       if (project.rowCount) {
         let { photo } = project.rows[0];
         if (req.files) {
@@ -58,7 +57,6 @@ module.exports = {
             );
           }
         }
-        console.log(req.files.photo);
         await projectModel.changePhotoProject(project.rows[0].id, photo.id);
 
         failed(res, {
