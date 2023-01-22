@@ -112,8 +112,7 @@ module.exports = {
 
       // jika user ditemukan
       if (user.rowCount > 0) {
-        console.log(user.is_verified, typeof user.is_verified);
-        if (user.is_verified == "true") {
+        if (user.is_verified === true) {
           const match = await bcrypt.compare(password, user.rows[0].password);
           // jika password benar
           if (match) {
