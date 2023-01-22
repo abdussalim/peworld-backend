@@ -79,7 +79,7 @@ module.exports = {
   activation: async (req, res) => {
     try {
       const { token } = req.params;
-      const user = await userModel.findBy("email_token", token);
+      const user = await userModel.findBy("user_token", token);
 
       if (!user.rowCount) {
         res.send(`

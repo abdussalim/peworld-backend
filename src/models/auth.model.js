@@ -1,4 +1,3 @@
-const { stubFalse } = require("lodash");
 const db = require("../config/db");
 
 module.exports = {
