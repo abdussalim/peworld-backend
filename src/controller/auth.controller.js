@@ -89,7 +89,7 @@ module.exports = {
         </div>`);
         return;
       }
-      await authModel.activateEmail(user.rows[0].id);
+      await authModel.activateEmail(user.rows[0].id, true);
       await authModel.updateToken(user.rows[0].id, "verified");
 
       res.send(`

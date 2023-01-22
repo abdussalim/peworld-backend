@@ -49,11 +49,11 @@ module.exports = {
         }
       );
     }),
-  activateEmail: (id) =>
+  activateEmail: (id, bool) =>
     new Promise((resolve, reject) => {
       db.query(
-        "UPDATE users SET is_verified=true WHERE id=$1",
-        [id],
+        "UPDATE users SET is_verified=$2 WHERE id=$1",
+        [id, bool],
         (error, result) => {
           if (error) {
             reject(error);
