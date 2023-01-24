@@ -1,7 +1,9 @@
-const { htmlTemplateTop, htmlTemplateBottom } = require("./template");
+const { htmlTemplateTop, htmlTemplateBottom } = require("./template.email");
 
-const resetAccountPassword = (link) => {
+const resetAccountPassword = (fullname, link) => {
   const htmlContent = `
+  <p style="font-size: 20px;">Halo, ${fullname}!</p>
+    <hr>
   <p>
     Anda menerima email ini karena Anda telah melakukan permintaan Reset Password di Peworld.
     <br>

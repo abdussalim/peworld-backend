@@ -4,7 +4,7 @@ const htmlTemplateTop = `
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Aplikasi Chat Realtime">
+  <meta name="description" content="Aplikasi Peworld">
   <meta name="keywords" content="Peworld, Javascript, NodeJS, ExpressJS">
   <meta name="author" content="Abdus Salim">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,13 +44,11 @@ const htmlTemplateTop = `
   </style>
   <title>Verify Your Account!</title>
 </head>
-<body style="background-color: #5E50A1; padding: 20px;">
+<body style="background-color: #5E50A1; padding: 20px; text-align: center;">
   <h1 class="auth-title">
     Peworld Jobs
   </h1>
-  <div class="auth-content" style="background-color: white;">
-    <p style="font-size: 20px;">Halo, hai hai!</p>
-    <hr>`;
+  <div class="auth-content" style="background-color: white;">`;
 
 const htmlTemplateBottom = `
   </div>

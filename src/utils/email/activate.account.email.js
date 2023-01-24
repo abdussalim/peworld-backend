@@ -1,7 +1,9 @@
-const { htmlTemplateTop, htmlTemplateBottom } = require("./template");
+const { htmlTemplateTop, htmlTemplateBottom } = require("./template.email");
 
 const activateAccount = (link) => {
   const htmlContent = `
+  <p style="font-size: 20px;">Halo, ${fullname}!</p>
+    <hr>
   <p>
     Anda menerima email ini karena Anda telah melakukan Registrasi Akun di Peworld.
     <br>

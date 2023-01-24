@@ -5,12 +5,13 @@ const authModel = require("../models/auth.model");
 const userModel = require("../models/user.model");
 const jwtToken = require("../utils/generateToken");
 const workerModel = require("../models/worker.model");
-const sendEmail = require("../utils/email/sendEmail");
+const sendEmail = require("../utils/email/send.email");
 const recruiterModel = require("../models/recruiter.model");
 const { success, failed } = require("../utils/createResponse");
-const activateAccountEmail = require("../utils/email/activateAccountEmail");
-const resetAccountPassword = require("../utils/email/resetAccountPassword");
+const activateAccountEmail = require("../utils/email/activate.account.email");
+const resetAccountPassword = require("../utils/email/reset.account.password");
 const { APP_NAME, EMAIL_FROM, API_URL, CLIENT_URL } = require("../utils/env");
+const htmlStatus = require("../utils/email/status/html.status");
 
 module.exports = {
   register: async (req, res) => {
@@ -59,7 +60,7 @@ module.exports = {
         from: `"${APP_NAME}" <${EMAIL_FROM}>`,
         to: req.body.email.toLowerCase(),
         subject: "Activate Your Account!",
-        html: activateAccountEmail(`${API_URL}/auth/activation/${token}`),
+        html: activateAccountEmail(name, `${API_URL}/auth/activation/${token}`),
       };
       sendEmail(templateEmail);
 
@@ -82,27 +83,32 @@ module.exports = {
       const user = await userModel.findBy("user_token", token);
 
       if (!user.rowCount) {
-        res.send(`
-        <div>
-          <h1>Activation Failed</h1>
-          <h3>Token invalid</h3>
-        </div>`);
+        let invalidTokenHtml = await htmlStatus.invalidTokenHtml(
+          `${CLIENT_URL}`,
+          `Your token is  <span style="color: red; font-weight: bold;">Invalid</span>, Please contact us for additional information!`,
+          "Go to Website"
+        );
+        res.send(invalidTokenHtml);
         return;
       }
       await authModel.activateEmail(user.rows[0].id, true);
       await authModel.updateToken(user.rows[0].id, "verified");
 
-      res.send(`
-      <div>
-        <h1>Activation Success</h1>
-        <h3>You can login now</h3>
-      </div>`);
+      let successHtml = await htmlStatus.successHtml(
+        `${CLIENT_URL}/auth/login`,
+        `Your account is <span style="color: red; font-weight: bold;">Verified</span>, Please login with click button below!`,
+        "Go to Login"
+      );
+      res.send(successHtml);
+      return;
     } catch (error) {
-      res.send(`
-      <div>
-        <h1>Activation Failed</h1>
-        <h3>${error.message}</h3>
-      </div>`);
+      let failedHtml = await htmlStatus.failedHtml(
+        `${CLIENT_URL}`,
+        `<span style="color: red; font-weight: bold;">${error.message}</span>, Please contact us for additional information!`,
+        "Go to Website"
+      );
+      res.send(failedHtml);
+      return;
     }
   },
   login: async (req, res) => {
@@ -167,7 +173,10 @@ module.exports = {
           from: `"${APP_NAME}" <${EMAIL_FROM}>`,
           to: req.body.email.toLowerCase(),
           subject: "Reset Your Password!",
-          html: resetAccountPassword(`${CLIENT_URL}/auth/reset/${token}`),
+          html: resetAccountPassword(
+            user.rows[0].name,
+            `${CLIENT_URL}/auth/reset/${token}`
+          ),
         };
         sendEmail(templateEmail);
       }

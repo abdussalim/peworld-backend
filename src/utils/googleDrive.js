@@ -1,16 +1,20 @@
-require("dotenv").config();
-
-const { google } = require("googleapis");
 const fs = require("fs");
+const { google } = require("googleapis");
+const {
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  REDIRECT_URI,
+  DRIVE_REFRESH_TOKEN,
+} = require("./env");
 
 const oAuth2Client = new google.auth.OAuth2(
-  process.env.GOOGLE_CLIENT_ID,
-  process.env.GOOGLE_CLIENT_SECRET,
-  process.env.REDIRECT_URI
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  REDIRECT_URI
 );
 
 oAuth2Client.setCredentials({
-  refresh_token: process.env.DRIVE_REFRESH_TOKEN,
+  refresh_token: DRIVE_REFRESH_TOKEN,
 });
 
 const uploadGoogleDriveProfilePhoto = async (file) => {
